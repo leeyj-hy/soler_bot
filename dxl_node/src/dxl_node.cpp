@@ -25,7 +25,7 @@ class dxl_node
         dxl_node()
         {
             dxl_srv = n.advertiseService("/sol_srv", &dxl_node::dxl_con_callback, this);
-            dxl_sub = n.subscribe("/track_sub", 1, &dxl_node::track_callback, this);
+            dxl_sub = n.subscribe("/tracker", 1, &dxl_node::track_callback, this);
             dxl_pub = n.advertise<soler_msgs::track>("/track_val", 1);
         }
 
@@ -75,6 +75,7 @@ inline void dxl_node::track_callback(const soler_msgs::track &msg)
         ROS_INFO("%f %f", x,y);
         
     }
+
     else
     {
         ROS_WARN("dxl is not enabled");

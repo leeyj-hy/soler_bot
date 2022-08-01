@@ -2,6 +2,7 @@
 #include "soler_msgs/dxl_enabler.h"
 #include "soler_msgs/track.h"
 #include "std_msgs/Float64.h"
+#include "geometry_msgs/Point.h"
 
 
 
@@ -21,12 +22,13 @@ class dxl_node
         bool enabler = 0;
         std_msgs::Float64 bbox_data[2];
         soler_msgs::track track_obj;
+        geometry_msgs::Point trackPoint;
 
         dxl_node()
         {
             dxl_srv = n.advertiseService("/sol_srv", &dxl_node::dxl_con_callback, this);
             dxl_sub = n.subscribe("/tracker", 1, &dxl_node::track_callback, this);
-            dxl_pub = n.advertise<soler_msgs::track>("/track_val", 1);
+            dxl_pub = n.advertise<geometry_msgs::Point>("track_val", 1);
         }
 
         bool dxl_con_callback(soler_msgs::dxl_enabler::Request &req, soler_msgs::dxl_enabler::Response &res);
@@ -71,7 +73,10 @@ inline void dxl_node::track_callback(const soler_msgs::track &msg)
     {
         float x = msg.position[0];
         float y = msg.position[1];
+        dxl_node::trackPoint.x=(int)x;
+        dxl_node::trackPoint.y=(int)y;
 
+        dxl_pub.publish(dxl_node::trackPoint);
         ROS_INFO("%f %f", x,y);
         
     }

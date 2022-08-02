@@ -12,6 +12,7 @@ add_service_files(
   FILES
     dxl_enabler.srv
     led_enabler.srv
+    talk_dir.srv
 )
 
 

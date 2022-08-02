@@ -1,2 +1,3 @@
 bool dir
 ---
+bool is_return

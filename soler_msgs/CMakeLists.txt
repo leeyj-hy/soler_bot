@@ -6,6 +6,7 @@ find_package(catkin REQUIRED roscpp rospy std_msgs message_generation)
 add_message_files(
     FILES
     track.msg
+    baseDxlLR.msg
 )
 
 add_service_files(

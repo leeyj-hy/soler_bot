@@ -23,12 +23,15 @@ class dxl_node
         std_msgs::Float64 bbox_data[2];
         soler_msgs::track track_obj;
         geometry_msgs::Point trackPoint;
-
+	int output_pin = 18;
+	
         dxl_node()
         {
             dxl_srv = n.advertiseService("/sol_srv", &dxl_node::dxl_con_callback, this);
             dxl_sub = n.subscribe("/tracker", 1, &dxl_node::track_callback, this);
             dxl_pub = n.advertise<geometry_msgs::Point>("track_val", 1);
+
+
         }
 
         bool dxl_con_callback(soler_msgs::dxl_enabler::Request &req, soler_msgs::dxl_enabler::Response &res);
@@ -55,12 +58,14 @@ inline bool dxl_node::dxl_con_callback(soler_msgs::dxl_enabler::Request &req, so
     {
         res.is_enabled=true;
         dxl_node::enabler = true;
+
         ROS_WARN("dxl_enabled");
     }
     else
     {
         res.is_enabled=false;
         dxl_node::enabler = false;
+
         ROS_WARN("dxl_disabled");
     }
 
